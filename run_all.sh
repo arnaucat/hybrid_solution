@@ -20,6 +20,6 @@ for PROBLEM in $PROBLEMS; do
     PROBLEM_NAME=$(head -n 1 $PROBLEM | awk '{print $1 "_" $2}')
     qsub -N "P.$PROBLEM_NAME.$THREAD" -pe mpich $THREAD run-mpich-smp.sh $SERIAL $PROBLEM
     for THREAD in $THREADS; do
-        qsub -N "P.$PROBLEM_NAME.$THREAD" -pe mpich $THREAD run-mpich-smp.sh $PARALLEL $PROBLEM
+        qsub -N "P.$PROBLEM_NAME.$THREAD" -pe mpich-smp $THREAD run-mpich-smp.sh $PARALLEL $PROBLEM
     done
 done
