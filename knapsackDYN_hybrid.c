@@ -23,7 +23,7 @@ static int knapSack(long int W, long int N, int wt[], int val[], double* timeSpe
 	long int i, w; 
     int result,size,rank,threads;
     int *K = (int*) malloc((W+1)*sizeof(int));
-    int *Kp = (int*) malloc((W+1)*sizeof(int));
+    int *KTemp = (int*) malloc((W+1)*sizeof(int));
        
     MPI_Init(NULL, NULL);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
@@ -46,14 +46,14 @@ static int knapSack(long int W, long int N, int wt[], int val[], double* timeSpe
             if (i==0 || w==0)
                 K[w] = 0;
             else if (wt[i-1] <= w)
-                K[w] = max(val[i-1] + Kp[w-wt[i-1]], Kp[w]);
+                K[w] = max(val[i-1] + KTemp[w-wt[i-1]], KTemp[w]);
             else
-                K[w] = Kp[w];
+                K[w] = KTemp[w];
 
         }
 
-        int *tmp = Kp;
-        Kp = K;
+        int *tmp = KTemp;
+        KTemp = K;
         K = tmp;
     }
 
@@ -66,7 +66,7 @@ static int knapSack(long int W, long int N, int wt[], int val[], double* timeSpe
         result = 0;
      
     free(K);
-    free(Kp);
+    free(KTemp);
 
     return result;      
 
