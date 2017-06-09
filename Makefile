@@ -1,10 +1,5 @@
 SERIAL_TARGET_DYN=knapsackDYN_serial
 HYBRID_TARGET_DYN=knapsackDYN_hybrid
-RESULTS=results.csv
-RESULTS_SPEEDUPS=results_speedups.csv
-RESULTS_TIMES=results_times_per_problem.csv
-OUTPUT_FOLER=output
-ERROR_FOLDER=errors
 
 all : serial hybrid
 
@@ -20,5 +15,5 @@ hybrid : $(HYBRID_TARGET_DYN)
 $(HYBRID_TARGET_DYN) : knapsackDYN_hybrid.c
 	mpicc knapsackDYN_hybrid.c -o $(HYBRID_TARGET_DYN)
 
-run-moore : bb
+run : bb
 	./run_all.sh
